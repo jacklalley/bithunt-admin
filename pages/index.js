@@ -1,65 +1,49 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ProjectTable from "../components/ProjectTable";
 
-export default function Home() {
+export default function Home({ projects }) {
   return (
-    <div className={styles.container}>
+    <div className="container mx-auto px-24">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
+      <main>
+        <div className="flex sm:px-0 px-8 py-4 mb-5 w-full items-center justify-between">
+          <a className="font-medium bg-gray-200 px-3 py-1 rounded-md">
+            New Projects
           </a>
         </div>
+        {projects == undefined ? (
+          "Loading..."
+        ) : (
+          <ProjectTable projects={projects} />
+        )}
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <Footer />
     </div>
-  )
+  );
+}
+
+export async function getStaticProps(context) {
+  const url = process.env.NEXT_PUBLIC_BASE_URL + "/admin/project_requests";
+  const res = await fetch(url, {
+    headers: new Headers({
+      Authorization:
+        "Bearer " +
+        "6a2edcb58bc9b8488586887fac1a94b40a402b2cd96d087dd90e26c68878b74511846b5ea2964735444076973f91cdf61ab1d0554c4c09a86b751661820f4f5a",
+      "Content-Type": "application/x-www-form-urlencoded",
+    }),
+  });
+  const projects = await res.json();
+
+  return {
+    props: {
+      projects,
+    },
+  };
 }
