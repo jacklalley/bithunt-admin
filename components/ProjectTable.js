@@ -8,6 +8,7 @@ function ProjectTable({ projects }) {
     if (latest_price == undefined) {
       return (
         <ProjectTableRow
+          id={project.id}
           name={project.name}
           bio={project.bio}
           website={project.website_url}
@@ -24,6 +25,7 @@ function ProjectTable({ projects }) {
     } else {
       return (
         <ProjectTableRow
+          id={project.id}
           name={project.name}
           bio={project.bio}
           website={project.website_url}
@@ -49,7 +51,8 @@ function ProjectTable({ projects }) {
               <ProjectTableHeader />
               <tbody className="bg-white divide-y divide-gray-200">
                 {projects.projects.map((project, index) => {
-                  return renderRow(project, undefined, index);
+                  const latest_price = project.prices[0];
+                  return renderRow(project, latest_price, index);
                 })}
               </tbody>
             </table>

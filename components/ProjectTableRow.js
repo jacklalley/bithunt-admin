@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import ProjectTable from "./ProjectTable";
+import axios from "axios";
+axios.defaults.headers.common["Accept"] = "application/json";
+const ADMIN_KEY =
+  "6a2edcb58bc9b8488586887fac1a94b40a402b2cd96d087dd90e26c68878b74511846b5ea2964735444076973f91cdf61ab1d0554c4c09a86b751661820f4f5a";
+
+const HEADER_CONFIG = {
+  headers: {
+    Authorization: "Bearer " + ADMIN_KEY,
+  },
+};
 
 function ProjectTableRow(props) {
   const {
+    id,
     name,
     supply,
     marketCap,
@@ -15,14 +26,80 @@ function ProjectTableRow(props) {
     published,
   } = props;
 
+  const [projectPublished, setProjectPublished] = useState(published);
+
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function publishProject() {
+    axios
+      .post(
+        process.env.NEXT_PUBLIC_BASE_URL +
+          "/admin/projects/" +
+          parseInt(id) +
+          "/publish",
+        null,
+        HEADER_CONFIG
+      )
+      .then(function (response) {
+        // handle success
+        setProjectPublished(true);
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }
+
+  function unpublishProject() {
+    axios
+      .post(
+        process.env.NEXT_PUBLIC_BASE_URL +
+          "/admin/projects/" +
+          parseInt(id) +
+          "/unpublish",
+        null,
+        HEADER_CONFIG
+      )
+      .then(function (response) {
+        // handle success
+        setProjectPublished(false);
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }
+
+  function renderPublishButton() {
+    if (!projectPublished) {
+      return (
+        <a
+          onClick={publishProject}
+          className="px-2 mr-3 py-1 cursor-pointer rounded-md border border-indigo-400 text-indigo-600 text-center block text-xs"
+        >
+          Publish
+        </a>
+      );
+    } else {
+      return (
+        <a
+          onClick={unpublishProject}
+          className="px-2  mr-3 py-1 cursor-pointer rounded-md bg-gray-400 text-white text-center block text-xs"
+        >
+          Unpublish
+        </a>
+      );
+    }
   }
 
   return (
     <tr>
       <td>
-        {published ? (
+        {projectPublished ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 text-indigo-600 mx-auto"
@@ -136,6 +213,7 @@ function ProjectTableRow(props) {
           Bitclout Profile
         </a>
       </td>
+      <td>{renderPublishButton()}</td>
     </tr>
   );
 }
