@@ -20,9 +20,12 @@ function Header() {
       <div className="flex flex-col sm:flex-row justify-between">
         <div className="flex items-center">
           <Link href="/">
-            <span className="flex-none mx-auto  cursor-pointer hover:opacity-70">
+            <span className="flex-none mx-auto  flex cursor-pointer hover:opacity-70">
               <img className="sm:hidden" alt="logo" src="/icon.svg" />
               <img className="hidden sm:block" alt="logo" src="/logo.svg" />
+              <span className="bg-red-100 rounded-md h-5 text-sm px-3 ml-2 text-red-600">
+                ADMIN
+              </span>
             </span>
           </Link>
 

@@ -9,19 +9,37 @@ function ProjectTableHeader() {
           scope="col"
           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
         >
+          Live
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
           Project
         </th>
         <th
           scope="col"
           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
         >
-          Website
+          Price
         </th>
         <th
           scope="col"
           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
         >
-          BitClout URL
+          Market Cap
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Circulating Supply
+        </th>
+        <th
+          scope="col"
+          class="relative px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Links
         </th>
       </tr>
     </thead>

@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import ProjectTable from "../components/ProjectTable";
 
 export default function Home({ projects }) {
+  console.log(projects);
   return (
     <div className="container mx-auto px-24">
       <Head>
@@ -30,7 +31,7 @@ export default function Home({ projects }) {
 }
 
 export async function getStaticProps(context) {
-  const url = process.env.NEXT_PUBLIC_BASE_URL + "/admin/project_requests";
+  const url = process.env.NEXT_PUBLIC_BASE_URL + "/admin/projects";
   const res = await fetch(url, {
     headers: new Headers({
       Authorization:

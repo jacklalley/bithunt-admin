@@ -18,6 +18,7 @@ function ProjectTable({ projects }) {
           supply="0.00"
           key={index}
           launched={project.launched}
+          published={project.published}
         />
       );
     } else {
@@ -33,6 +34,7 @@ function ProjectTable({ projects }) {
           supply={latest_price.supply}
           key={index}
           launched={project.launched}
+          published={project.published}
         />
       );
     }
